@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
-use App\Contracts\JsonResponseServiceInterface;
+use App\Services\Contracts\JsonResponseInterface;
 
-class JsonResponseService implements JsonResponseServiceInterface
+use Illuminate\Http\JsonResponse;
+
+class JsonResponseSer implements JsonResponseInterface
 {
-    public function success($data, $message = 'Success', $statusCode = 200)
+    public function success(mixed $data, string $message = 'Success', int $statusCode = 200): JsonResponse
     {
         return response()->json([
             'status' => 'success',
@@ -15,7 +17,7 @@ class JsonResponseService implements JsonResponseServiceInterface
         ], $statusCode);
     }
 
-    public function error($message = 'Error', $statusCode = 400)
+    public function error(string $message = 'Error', int $statusCode = 400): JsonResponse
     {
         return response()->json([
             'status' => 'error',

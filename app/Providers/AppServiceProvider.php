@@ -3,10 +3,15 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Contracts\JsonResponseServiceInterface;
-use App\Services\JsonResponseService;
-use App\Contracts\UserRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Services\Contracts\JsonResponseInterface;
+use App\Services\Contracts\ValidationInterface;
+use App\Services\Contracts\EncryptionInterface;
+
 use App\Repositories\UserRepository;
+use App\Services\JsonResponseSer;
+use App\Services\ValidationSer;
+use App\Services\EncryptionSer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,8 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(JsonResponseServiceInterface::class, JsonResponseService::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(JsonResponseInterface::class, JsonResponseSer::class);
+        $this->app->bind(ValidationInterface::class, ValidationSer::class);
+        $this->app->bind(EncryptionInterface::class, EncryptionSer::class);
     }
 
     /**
