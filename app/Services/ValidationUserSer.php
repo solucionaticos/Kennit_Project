@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use App\Services\Contracts\ValidationInterface;
+use App\Services\Contracts\ValidationUserInterface;
 use App\Services\Contracts\JsonResponseInterface;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
 
-class ValidationSer implements ValidationInterface
+class ValidationUserSer implements ValidationUserInterface
 {
 
     private $jsonResponse;

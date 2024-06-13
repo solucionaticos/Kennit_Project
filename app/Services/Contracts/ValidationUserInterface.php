@@ -4,7 +4,7 @@ namespace App\Services\Contracts;
 
 use Illuminate\Http\JsonResponse;
 
-interface ValidationInterface
+interface ValidationUserInterface
 {
     public function validate(array $data): JsonResponse|array;
 }

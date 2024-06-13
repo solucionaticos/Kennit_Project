@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Services\Contracts\JsonResponseInterface;
-use App\Services\Contracts\ValidationInterface;
+use App\Services\Contracts\ValidationUserInterface;
 use App\Services\Contracts\EncryptionInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -15,7 +15,7 @@ class StoreUserController extends Controller {
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
         private readonly JsonResponseInterface $jsonResponse,
-        private readonly ValidationInterface $validation,
+        private readonly ValidationUserInterface $validation,
         private readonly EncryptionInterface $encryption) 
     {}
 
