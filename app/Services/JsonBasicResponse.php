@@ -3,17 +3,16 @@
 namespace App\Services;
 
 use App\Services\Contracts\JsonResponseInterface;
-
 use Illuminate\Http\JsonResponse;
 
-class JsonResponseSer implements JsonResponseInterface
+class JsonBasicResponse implements JsonResponseInterface
 {
     public function success(mixed $data, string $message = 'Success', int $statusCode = 200): JsonResponse
     {
         return response()->json([
             'status' => 'success',
             'message' => $message,
-            'data' => $data
+            'data' => $data,
         ], $statusCode);
     }
 
@@ -22,7 +21,7 @@ class JsonResponseSer implements JsonResponseInterface
         return response()->json([
             'status' => 'error',
             'message' => $message,
-            'data' => null
+            'data' => null,
         ], $statusCode);
     }
 }

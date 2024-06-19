@@ -2,15 +2,18 @@
 
 namespace App\Repositories;
 
-use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Models\User;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class UserRepository implements UserRepositoryInterface
+class EloquentUserRepository implements UserRepositoryInterface
 {
     public function create(array $data): User
     {
-        return User::create($data);
+        /** @var User $user */
+        $user = User::query()->create($data);
+
+        return $user;
     }
 
     public function getAll(): Collection

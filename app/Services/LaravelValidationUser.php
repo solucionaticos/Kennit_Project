@@ -2,20 +2,14 @@
 
 namespace App\Services;
 
-use App\Services\Contracts\ValidationUserInterface;
 use App\Services\Contracts\JsonResponseInterface;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
 
-class ValidationUserSer implements ValidationUserInterface
+class LaravelValidationUser
 {
-
-    private $jsonResponse;
-
-    public function __construct(JsonResponseInterface $jsonResponse)
+    public function __construct(private readonly JsonResponseInterface $jsonResponse)
     {
-        $this->jsonResponse = $jsonResponse;
     }
 
     public function validate(array $data): JsonResponse|array
@@ -23,7 +17,7 @@ class ValidationUserSer implements ValidationUserInterface
         $validator = Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8'
+            'password' => 'required|string|min:8',
         ]);
 
         if ($validator->fails()) {

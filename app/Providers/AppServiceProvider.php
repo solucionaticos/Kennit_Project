@@ -2,31 +2,24 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-
 use App\Repositories\Contracts\UserRepositoryInterface;
-use App\Services\Contracts\JsonResponseInterface;
-use App\Services\Contracts\ValidationUserInterface;
+use App\Repositories\EloquentUserRepository;
 use App\Services\Contracts\EncryptionInterface;
-
-use App\Repositories\UserRepository;
-use App\Services\JsonResponseSer;
-use App\Services\ValidationUserSer;
-use App\Services\EncryptionSer;
+use App\Services\Contracts\JsonResponseInterface;
+use App\Services\JsonBasicResponse;
+use App\Services\LaravelHashEncryption;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
-        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
-        $this->app->bind(JsonResponseInterface::class, JsonResponseSer::class);
-        $this->app->bind(ValidationUserInterface::class, ValidationUserSer::class);
-        $this->app->bind(EncryptionInterface::class, EncryptionSer::class);
+        $this->app->bind(UserRepositoryInterface::class, EloquentUserRepository::class);
+        $this->app->bind(JsonResponseInterface::class, JsonBasicResponse::class);
+        $this->app->bind(EncryptionInterface::class, LaravelHashEncryption::class);
     }
 
     /**

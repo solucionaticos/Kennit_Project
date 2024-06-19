@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\ApiV1\GetUsersController;
+use App\Http\Controllers\ApiV1\RegisterUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\StoreUserController;
-use App\Http\Controllers\Api\GetUsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/user/create', StoreUserController::class);
+Route::post('/user/create', RegisterUserController::class);
 Route::get('/user/get-all', GetUsersController::class);
