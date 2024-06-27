@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 class RegisterUserController extends Controller
 {
     public function __construct(
-        private readonly JsonResponseInterface $jsonResponse,
-        private readonly LaravelValidationUser $validation,
-        private readonly RegisterUserUseCase $registerUserUseCase
+        private JsonResponseInterface $jsonResponse,
+        private LaravelValidationUser $validation,
+        private RegisterUserUseCase $registerUserUseCase
     ) {
     }
 

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\ProductRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\EloquentProductRepository;
 use App\Repositories\EloquentUserRepository;
 use App\Services\Contracts\EncryptionInterface;
 use App\Services\Contracts\JsonResponseInterface;
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserRepositoryInterface::class, EloquentUserRepository::class);
         $this->app->bind(JsonResponseInterface::class, JsonBasicResponse::class);
         $this->app->bind(EncryptionInterface::class, LaravelHashEncryption::class);
+        $this->app->bind(ProductRepositoryInterface::class, EloquentProductRepository::class);
     }
 
     /**

@@ -11,8 +11,8 @@ use Illuminate\Http\Request;
 class GetUsersController extends Controller
 {
     public function __construct(
-        private readonly UserRepositoryInterface $userRepository,
-        private readonly JsonResponseInterface $jsonResponse
+        private UserRepositoryInterface $userRepository,
+        private JsonResponseInterface $jsonResponse
     ) {
     }
 
