@@ -1,10 +1,11 @@
 <?php
 
-namespace App\useCases;
+namespace App\useCases\Products;
 
 use App\Models\DTOs\ProductDTO;
-use App\Models\Product;
+// use App\Models\Product;
 use App\Repositories\Contracts\ProductRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 
 class RegisterProductUseCase
 {
@@ -13,13 +14,15 @@ class RegisterProductUseCase
     {
     }
 
-    public function execute(ProductDTO $productDTO): Product
+    public function execute(ProductDTO $productDTO): JsonResponse
     {
-        return $this->productRepository->create([
+        $productData = [
             'name' => $productDTO->getName(),
             'description' => $productDTO->getDescription(),
             'price' => $productDTO->getPrice(),
             'stock' => $productDTO->getStock(),
-        ]);
+        ];
+
+        return $this->productRepository->create($productData);
     }
 }

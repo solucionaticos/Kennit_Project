@@ -1,10 +1,11 @@
 <?php
 
-namespace App\useCases;
+namespace App\useCases\Products;
 
 use App\Models\DTOs\ProductDTO;
-use App\Models\Product;
+// use App\Models\Product;
 use App\Repositories\Contracts\ProductRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 
 class UpdateProductUseCase
 {
@@ -12,7 +13,7 @@ class UpdateProductUseCase
     {
     }
 
-    public function execute(int $id, ProductDTO $productDTO): Product
+    public function execute(int $id, ProductDTO $productDTO): JsonResponse
     {
         $productData = [
             'name' => $productDTO->getName(),

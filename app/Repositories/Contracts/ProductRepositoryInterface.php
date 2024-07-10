@@ -2,18 +2,17 @@
 
 namespace App\Repositories\Contracts;
 
-use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 
 interface ProductRepositoryInterface
 {
-    public function getAll(): Collection;
+    public function getAll(): JsonResponse;
 
-    public function show(int $id): Product;
+    public function show(int $id): JsonResponse;
 
-    public function create(array $data): Product;
+    public function create(array $data): JsonResponse;
 
-    public function update(int $id, array $data): Product;
+    public function update(int $id, array $data): JsonResponse;
 
-    public function delete(int $id): bool;
+    public function delete(int $id): JsonResponse;
 }
