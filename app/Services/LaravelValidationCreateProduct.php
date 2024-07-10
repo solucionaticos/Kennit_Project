@@ -5,19 +5,24 @@ namespace App\Services;
 use App\Services\Contracts\JsonResponseInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
-class LaravelValidationUser
+class LaravelValidationCreateProduct
 {
     public function __construct(private JsonResponseInterface $jsonResponse)
     {
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function validate(array $data): JsonResponse|array
     {
         $validator = Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
