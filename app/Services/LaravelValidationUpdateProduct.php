@@ -23,6 +23,8 @@ class LaravelValidationUpdateProduct
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
+            'discount' => 'required|numeric',
+            'tax_rate' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {

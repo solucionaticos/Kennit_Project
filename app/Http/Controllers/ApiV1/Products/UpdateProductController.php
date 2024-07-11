@@ -31,6 +31,8 @@ class UpdateProductController extends Controller
         $productDTO->setDescription($validatedData['description']);
         $productDTO->setPrice($validatedData['price']);
         $productDTO->setStock($validatedData['stock']);
+        $productDTO->setDiscount($validatedData['discount']);
+        $productDTO->setTaxRate($validatedData['tax_rate']);
 
         return $this->updateProductUseCase->execute($id, $productDTO);
     }

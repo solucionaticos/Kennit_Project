@@ -30,6 +30,10 @@ class EloquentProductRepository implements ProductRepositoryInterface
                     'description' => $item['description'],
                     'price' => $item['price'],
                     'stock' => $item['stock'],
+                    'discount' => $item['discount'],
+                    'final_price' => $item['final_price'],
+                    'tax_rate' => $item['tax_rate'],
+                    'tax_amount' => $item['tax_amount'],
                     'created_at' => \Carbon\Carbon::parse($item['created_at'])->toDateTimeString(),
                     'updated_at' => \Carbon\Carbon::parse($item['updated_at'])->toDateTimeString(),
                 ];
@@ -97,6 +101,10 @@ class EloquentProductRepository implements ProductRepositoryInterface
                 'description' => $product->description,
                 'price' => $product->price,
                 'stock' => $product->stock,
+                'discount' => $product->discount,
+                'final_price' => $product->final_price,
+                'tax_rate' => $product->tax_rate,
+                'tax_amount' => $product->tax_amount,
                 'created_at' => $product->created_at->toDateTimeString(),
                 'updated_at' => $product->updated_at->toDateTimeString(),
             ];

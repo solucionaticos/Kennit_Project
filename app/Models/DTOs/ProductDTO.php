@@ -8,9 +8,13 @@ class ProductDTO
 
     private string $description;
 
-    private int $price;
+    private float $price;
 
     private int $stock;
+
+    private float $discount;
+
+    private float $taxRate;
 
     public function getName(): string
     {
@@ -32,7 +36,7 @@ class ProductDTO
         $this->description = $description;
     }
 
-    public function getPrice(): int
+    public function getPrice(): float
     {
         return $this->price;
     }
@@ -50,5 +54,25 @@ class ProductDTO
     public function setStock(int $stock): void
     {
         $this->stock = $stock;
+    }
+
+    public function getDiscount(): float
+    {
+        return $this->discount;
+    }
+
+    public function setDiscount(float $discount): void
+    {
+        $this->discount = $discount;
+    }
+
+    public function getTaxRate(): float
+    {
+        return $this->taxRate;
+    }
+
+    public function setTaxRate(float $taxRate): void
+    {
+        $this->taxRate = $taxRate;
     }
 }
