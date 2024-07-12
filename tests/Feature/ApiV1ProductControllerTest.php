@@ -24,7 +24,7 @@ class ApiV1ProductControllerTest extends TestCase
             'status',
             'message',
             'data' => [
-                '*' => ['id', 'name', 'description', 'price', 'stock', 'created_at', 'updated_at'],
+                '*' => ['id', 'name', 'description', 'price', 'stock', 'discount', 'final_price', 'tax_rate', 'tax_amount', 'created_at', 'updated_at'],
             ],
         ]);
 
@@ -36,6 +36,10 @@ class ApiV1ProductControllerTest extends TestCase
                 'description' => $product->description,
                 'price' => $product->price,
                 'stock' => $product->stock,
+                'discount' => $product->discount,
+                'final_price' => $product->final_price,
+                'tax_rate' => $product->tax_rate,
+                'tax_amount' => $product->tax_amount,
             ]);
         }
 
@@ -70,6 +74,12 @@ class ApiV1ProductControllerTest extends TestCase
                 'description',
                 'price',
                 'stock',
+
+                'discount',
+                'final_price',
+                'tax_rate',
+                'tax_amount',
+
                 'created_at',
                 'updated_at',
             ],
@@ -85,6 +95,12 @@ class ApiV1ProductControllerTest extends TestCase
                 'description' => $product->description,
                 'price' => (string) $product->price, // Convertir a cadena
                 'stock' => $product->stock,
+
+                'discount' => (string) $product->discount,
+                'final_price' => (string) $product->final_price,
+                'tax_rate' => (string) $product->tax_rate,
+                'tax_amount' => (string) $product->tax_amount,
+
                 'created_at' => $product->created_at->toJSON(), // Convertir a cadena
                 'updated_at' => $product->updated_at->toJSON(), // Convertir a cadena
             ],
@@ -98,8 +114,12 @@ class ApiV1ProductControllerTest extends TestCase
         $data = [
             'name' => 'Producto Test',
             'description' => 'Descripción Test',
-            'price' => 99,
+            'price' => 100,
             'stock' => 10,
+            'discount' => 10,
+            'final_price' => 99,
+            'tax_rate' => 10,
+            'tax_amount' => 9,
         ];
 
         // Cuando
@@ -127,8 +147,12 @@ class ApiV1ProductControllerTest extends TestCase
         $data = [
             'name' => 'Producto Actualizado',
             'description' => 'Descripción Actualizada',
-            'price' => 199,
-            'stock' => 20,
+            'price' => 100,
+            'stock' => 10,
+            'discount' => 10,
+            'final_price' => 99,
+            'tax_rate' => 10,
+            'tax_amount' => 9,
         ];
 
         // Cuando
@@ -165,6 +189,12 @@ class ApiV1ProductControllerTest extends TestCase
                 'description' => $product->description,
                 'price' => (string) $product->price, // Convertir a cadena
                 'stock' => $product->stock,
+
+                'discount' => (string) $product->discount,
+                'final_price' => (string) $product->final_price,
+                'tax_rate' => (string) $product->tax_rate,
+                'tax_amount' => (string) $product->tax_amount,
+
                 'created_at' => $product->created_at->format('Y-m-d H:i:s'), // Formatear sin milisegundos
                 'updated_at' => $product->updated_at->format('Y-m-d H:i:s'), // Formatear sin milisegundos
             ],
