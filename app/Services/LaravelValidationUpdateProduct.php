@@ -2,21 +2,15 @@
 
 namespace App\Services;
 
-use App\Services\Contracts\JsonResponseInterface;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class LaravelValidationUpdateProduct
 {
-    public function __construct(private JsonResponseInterface $jsonResponse)
-    {
-    }
-
     /**
      * @throws ValidationException
      */
-    public function validate(array $data): JsonResponse|array
+    public function validate(array $data): array|string
     {
         $validator = Validator::make($data, [
             'name' => 'required|string|max:255',
@@ -28,7 +22,7 @@ class LaravelValidationUpdateProduct
         ]);
 
         if ($validator->fails()) {
-            return $this->jsonResponse->error($validator->errors()->first(), '', 422);
+            return $validator->errors()->first();
         }
 
         return $validator->validated();

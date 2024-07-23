@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/user/create', RegisterUserController::class);
 Route::get('/user/get-all', GetUsersController::class);
 
-/* Products V2 */
+/* Products */
 Route::get('/product/get-all', GetAllProductController::class);
 Route::get('/product/get-one/{id}', GetOneProductController::class);
 Route::post('/product/register', RegisterProductController::class);

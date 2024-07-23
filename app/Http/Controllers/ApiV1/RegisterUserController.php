@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DTOs\UserRegisterDTO;
 use App\Services\Contracts\JsonResponseInterface;
 use App\Services\LaravelValidationUser;
-use App\useCases\RegisterUserUseCase;
+use App\UseCases\RegisterUserUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

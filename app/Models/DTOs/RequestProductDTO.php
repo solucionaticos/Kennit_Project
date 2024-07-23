@@ -2,7 +2,7 @@
 
 namespace App\Models\DTOs;
 
-class ProductDTO
+class RequestProductDTO
 {
     private string $name;
 
