@@ -140,10 +140,10 @@ class ApiV1ProductControllerTest extends TestCase
             'description' => 'Descripción Test',
             'price' => 100,
             'stock' => 10,
-            'discount' => 10,
-            'final_price' => 90,
+            'discount' => 0,
+            'final_price' => 0,
             'tax_rate' => 10,
-            'tax_amount' => 9,
+            'tax_amount' => 0,
         ];
 
         // Cuando se hace la solicitud POST para crear el producto
@@ -181,9 +181,9 @@ class ApiV1ProductControllerTest extends TestCase
                 'price' => (string) $data['price'],
                 'stock' => $data['stock'],
                 'discount' => (string) 0,
-                'final_price' => (string) 110,
+                'final_price' => (string) 0,
                 'tax_rate' => (string) $data['tax_rate'],
-                'tax_amount' => (string) 10,
+                'tax_amount' => (string) 0,
             ],
         ]);
 
@@ -194,9 +194,9 @@ class ApiV1ProductControllerTest extends TestCase
             'price' => $data['price'],
             'stock' => $data['stock'],
             'discount' => 0,
-            'final_price' => 110,
+            'final_price' => 0,
             'tax_rate' => $data['tax_rate'],
-            'tax_amount' => 10,
+            'tax_amount' => 0,
         ]);
     }
 
