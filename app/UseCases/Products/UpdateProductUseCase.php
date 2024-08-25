@@ -89,4 +89,4 @@ class UpdateProductUseCase
     {
         return $discountedPrice * ($taxRate / 100);
     }
-}
+3}
