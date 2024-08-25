@@ -4,7 +4,7 @@ namespace App\UseCases\Products;
 
 use App\Models\DTOs\RequestProductDTO;
 use App\Models\Product;
-use App\Repositories\Contracts\Product\UpdateProductRepositoryInterface;
+use App\Repositories\Contracts\ProductRepositoryInterface;
 
 class UpdateProductUseCase
 {
@@ -24,7 +24,7 @@ class UpdateProductUseCase
 
     private const WITHOUT_DISCOUNT = 0;
 
-    public function __construct(private UpdateProductRepositoryInterface $productUpdateRepository)
+    public function __construct(private ProductRepositoryInterface $productRepository)
     {
     }
 
@@ -52,7 +52,7 @@ class UpdateProductUseCase
             'tax_amount' => $taxAmount,
         ];
 
-        return $this->productUpdateRepository->update($id, $productData);
+        return $this->productRepository->update($id, $productData);
     }
 
     private function calculateDiscountByTaxRate(float $price, float $discount, float $taxRate): float
@@ -89,4 +89,4 @@ class UpdateProductUseCase
     {
         return $discountedPrice * ($taxRate / 100);
     }
-3}
+}

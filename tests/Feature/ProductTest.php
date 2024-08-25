@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Product;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
@@ -36,5 +34,4 @@ class ProductTest extends TestCase
         $response->assertViewHas('products', Product::all());
         $response->assertSee('No se encontraron productos');
     }
-
 }

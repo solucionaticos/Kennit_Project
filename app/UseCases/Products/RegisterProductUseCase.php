@@ -4,7 +4,7 @@ namespace App\UseCases\Products;
 
 use App\Models\DTOs\RequestProductDTO;
 use App\Models\Product;
-use App\Repositories\Contracts\Product\RegisterProductRepositoryInterface;
+use App\Repositories\Contracts\ProductRepositoryInterface;
 
 class RegisterProductUseCase
 {
@@ -25,7 +25,7 @@ class RegisterProductUseCase
     private const WITHOUT_DISCOUNT = 0;
 
     public function __construct(
-        private RegisterProductRepositoryInterface $productRegisterRepository)
+        private ProductRepositoryInterface $productRepository)
     {
     }
 
@@ -54,7 +54,7 @@ class RegisterProductUseCase
             'tax_amount' => $taxAmount,
         ];
 
-        return $this->productRegisterRepository->create($productData);
+        return $this->productRepository->create($productData);
     }
 
     // Validación final para que el descuento nunca sea mayor a 30
