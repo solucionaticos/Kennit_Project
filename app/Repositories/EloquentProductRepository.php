@@ -4,72 +4,88 @@ namespace App\Repositories;
 
 use App\Models\Product;
 use App\Repositories\Contracts\ProductRepositoryInterface;
-use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EloquentProductRepository implements ProductRepositoryInterface
 {
+    /**
+     * Creates a new product record in the database.
+     *
+     * @param  array  $productData  Array containing the data for the new product.
+     * @return Product The newly created product instance.
+     */
+    public function create(array $productData): Product
+    {
+        /** @var Product $product */
+        $product = Product::query()->create($productData);
+
+        return $product;
+    }
+
+    /**
+     * Retrieves all product records from the database.
+     *
+     * @return Collection A collection of all product instances.
+     *
+     * @throws ModelNotFoundException If no products are found.
+     */
     public function getAll(): Collection
     {
-        try {
-            return Product::all();
-        } catch (Exception $e) {
-            throw new Exception('Error al obtener todos los productos: '.$e->getMessage());
-        }
+        /** @var Product $products */
+        $products = Product::all();
+
+        return $products;
     }
 
-    public function show(int $id): Product
+    /**
+     * Retrieves a single product record by its ID.
+     *
+     * @param  int  $productId  The ID of the product to retrieve.
+     * @return Product The product instance.
+     *
+     * @throws ModelNotFoundException If the product is not found.
+     */
+    public function getOne(int $productId): Product
     {
-        try {
-            /** @var Product $product */
-            $product = Product::query()->findOrFail($id);
+        /** @var Product $product */
+        $product = Product::query()->findOrFail($productId);
 
-            return $product;
-        } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Producto no encontrado: '.$e->getMessage());
-        } catch (Exception $e) {
-            throw new Exception('Error al mostrar el producto: '.$e->getMessage());
-        }
+        return $product;
     }
 
-    public function create(array $data): Product
+    /**
+     * Updates an existing product record in the database.
+     *
+     * @param  int  $productId  The ID of the product to update.
+     * @param  array  $productData  Array containing the updated product data.
+     * @return Product The updated product instance.
+     *
+     * @throws ModelNotFoundException If the product is not found.
+     */
+    public function update(int $productId, array $productData): Product
     {
-        try {
-            /** @var Product $product */
-            $product = Product::query()->create($data);
+        /** @var Product $product */
+        $product = Product::query()->findOrFail($productId);
+        $product->update($productData);
 
-            return $product;
-        } catch (Exception $e) {
-            throw new Exception('Error al crear el producto: '.$e->getMessage());
-        }
+        return $product;
     }
 
-    public function update(int $id, array $data): Product
+    /**
+     * Deletes a product record from the database.
+     *
+     * @param  int  $productId  The ID of the product to delete.
+     * @return bool True if the deletion was successful.
+     *
+     * @throws ModelNotFoundException If the product is not found.
+     */
+    public function delete(int $productId): bool
     {
-        try {
-            /** @var Product $product */
-            $product = Product::query()->findOrFail($id);
-            $product->update($data);
+        /** @var Product $product */
+        $product = Product::query()->findOrFail($productId);
+        $product->delete();
 
-            return $product;
-        } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Producto no encontrado para actualizar: '.$e->getMessage());
-        } catch (Exception $e) {
-            throw new Exception('Error al actualizar el producto: '.$e->getMessage());
-        }
-    }
-
-    public function delete(int $id): bool
-    {
-        try {
-            Product::query()->findOrFail($id)->delete();
-
-            return true;
-        } catch (ModelNotFoundException $e) {
-            throw new ModelNotFoundException('Producto no encontrado para eliminar: '.$e->getMessage());
-        } catch (Exception $e) {
-            throw new Exception('Error al eliminar el producto: '.$e->getMessage());
-        }
+        return true;
     }
 }

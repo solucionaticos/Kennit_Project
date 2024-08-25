@@ -26,8 +26,4 @@ Route::post('/user/create', RegisterUserController::class);
 Route::get('/user/get-all', GetUsersController::class);
 
 /* Products */
-Route::get('/product/get-all', [ProductController::class, 'getAll'])->name('product.get-all');
-Route::get('/product/show/{id}', [ProductController::class, 'show'])->name('product.show');
-Route::post('/product/create', [ProductController::class, 'create'])->name('product.create');
-Route::put('/product/update/{id}', [ProductController::class, 'update'])->name('product.update');
-Route::delete('/product/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+Route::resource('products', ProductController::class);
