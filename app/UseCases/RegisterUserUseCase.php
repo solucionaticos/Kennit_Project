@@ -1,6 +1,6 @@
 <?php
 
-namespace App\useCases;
+namespace App\UseCases;
 
 use App\Models\DTOs\UserRegisterDTO;
 use App\Models\User;

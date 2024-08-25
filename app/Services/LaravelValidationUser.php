@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class LaravelValidationUser
 {
-    public function __construct(private readonly JsonResponseInterface $jsonResponse)
+    public function __construct(private JsonResponseInterface $jsonResponse)
     {
     }
 
@@ -21,7 +21,7 @@ class LaravelValidationUser
         ]);
 
         if ($validator->fails()) {
-            return $this->jsonResponse->error($validator->errors()->first(), 422);
+            return $this->jsonResponse->error($validator->errors()->first(), '', 422);
         }
 
         return $validator->validated();

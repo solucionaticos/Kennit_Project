@@ -16,11 +16,12 @@ class JsonBasicResponse implements JsonResponseInterface
         ], $statusCode);
     }
 
-    public function error(string $message = 'Error', int $statusCode = 400): JsonResponse
+    public function error(string $message = 'Error', string $messageSystem = '', int $statusCode = 400): JsonResponse
     {
         return response()->json([
             'status' => 'error',
             'message' => $message,
+            'messageSystem' => $messageSystem,
             'data' => null,
         ], $statusCode);
     }

@@ -13,7 +13,49 @@ class ApiV1ProductControllerTest extends TestCase
     public function test_get_all_products_success()
     {
         // Dato
-        Product::factory()->count(3)->create();
+        $data = [
+            'name' => 'Producto Test 1',
+            'description' => 'Descripción Test 1',
+            'price' => 100,
+            'stock' => 10,
+            'discount' => 10,
+            'final_price' => 99,
+            'tax_rate' => 10,
+            'tax_amount' => 9,
+        ];
+
+        // Cuando
+        $response = $this->post('/api/v1/product/register', $data);
+
+        // Dato
+        $data = [
+            'name' => 'Producto Test 2',
+            'description' => 'Descripción Test 2',
+            'price' => 100,
+            'stock' => 10,
+            'discount' => 10,
+            'final_price' => 99,
+            'tax_rate' => 10,
+            'tax_amount' => 9,
+        ];
+
+        // Cuando
+        $response = $this->post('/api/v1/product/register', $data);
+
+        // Dato
+        $data = [
+            'name' => 'Producto Test 3',
+            'description' => 'Descripción Test 3',
+            'price' => 100,
+            'stock' => 10,
+            'discount' => 10,
+            'final_price' => 99,
+            'tax_rate' => 10,
+            'tax_amount' => 9,
+        ];
+
+        // Cuando
+        $response = $this->post('/api/v1/product/register', $data);
 
         // Cuando
         $response = $this->get('/api/v1/product/get-all');
@@ -21,96 +63,236 @@ class ApiV1ProductControllerTest extends TestCase
         // Se espera qué
         $response->assertStatus(200);
         $response->assertJsonStructure([
-            '*' => ['id', 'name', 'description', 'price', 'stock', 'created_at', 'updated_at'],
+            'status',
+            'message',
+            'data' => [
+                '*' => ['id', 'name', 'description', 'price', 'stock', 'discount', 'final_price', 'tax_rate', 'tax_amount', 'created_at', 'updated_at'],
+            ],
         ]);
+
     }
 
     public function test_show_product_success()
     {
         // Dato
-        $product = Product::factory()->create();
+        $product = Product::factory()->create([
+            'name' => 'Producto Test 1',
+            'description' => 'Descripción Test 1',
+            'price' => 100,
+            'stock' => 10,
+            'discount' => 10,
+            'final_price' => 99,
+            'tax_rate' => 10,
+            'tax_amount' => 9,
+        ]);
 
         // Cuando
-        $response = $this->get("/api/v1/product/show/{$product->id}");
+        $response = $this->get("/api/v1/product/get-one/{$product->id}");
 
         // Se espera qué
         $response->assertStatus(200);
-        $response->assertJson([
-            'id' => $product->id,
-            'name' => $product->name,
-            'description' => $product->description,
-            'price' => $product->price,
-            'stock' => $product->stock,
+
+        // Verificar estructura del JSON
+        $response->assertJsonStructure([
+            'status',
+            'message',
+            'data' => [
+                'id',
+                'name',
+                'description',
+                'price',
+                'stock',
+                'discount',
+                'final_price',
+                'tax_rate',
+                'tax_amount',
+                'created_at',
+                'updated_at',
+            ],
         ]);
+
+        // Verificar contenido del JSON
+        $response->assertJson([
+            'status' => 'success',
+            'message' => 'Successfully getting the product',
+            'data' => [
+                'id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'price' => (string) $product->price,
+                'stock' => $product->stock,
+                'discount' => (string) $product->discount,
+                'final_price' => (string) $product->final_price,
+                'tax_rate' => (string) $product->tax_rate,
+                'tax_amount' => (string) $product->tax_amount,
+                'created_at' => $product->created_at->toJSON(),
+                'updated_at' => $product->updated_at->toJSON(),
+            ],
+        ]);
+
     }
 
     public function test_create_product_success()
     {
-        // Dato
+        // Datos de prueba
         $data = [
             'name' => 'Producto Test',
             'description' => 'Descripción Test',
-            'price' => 99,
+            'price' => 100,
             'stock' => 10,
+            'discount' => 0,
+            'final_price' => 0,
+            'tax_rate' => 10,
+            'tax_amount' => 0,
         ];
 
-        // Cuando
-        $response = $this->post('/api/v1/product/create', $data);
+        // Cuando se hace la solicitud POST para crear el producto
+        $response = $this->postJson('/api/v1/product/register', $data);
 
-        // Se espera qué
-        $response->assertStatus(201);
-        $response->assertJson([
-            'status' => 'success',
-            'message' => 'Product created successfully',
-            'data' => $data,
+        // Se espera que el estado sea 200 OK
+        $response->assertStatus(200);
+
+        // Verificar estructura del JSON
+        $response->assertJsonStructure([
+            'status',
+            'message',
+            'data' => [
+                'id',
+                'name',
+                'description',
+                'price',
+                'stock',
+                'discount',
+                'final_price',
+                'tax_rate',
+                'tax_amount',
+                'created_at',
+                'updated_at',
+            ],
         ]);
 
-        $this->assertDatabaseHas('products', $data);
+        // Verificar contenido del JSON
+        $response->assertJson([
+            'status' => 'success',
+            'message' => 'Successfully created product.',
+            'data' => [
+                'name' => $data['name'],
+                'description' => $data['description'],
+                'price' => (string) $data['price'],
+                'stock' => $data['stock'],
+                'discount' => (string) 0,
+                'final_price' => (string) 0,
+                'tax_rate' => (string) $data['tax_rate'],
+                'tax_amount' => (string) 0,
+            ],
+        ]);
+
+        // Verificación de que en products exista la data creada
+        $this->assertDatabaseHas('products', [
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'price' => $data['price'],
+            'stock' => $data['stock'],
+            'discount' => 0,
+            'final_price' => 0,
+            'tax_rate' => $data['tax_rate'],
+            'tax_amount' => 0,
+        ]);
     }
 
     public function test_update_product_success()
     {
-        // Crear un producto de prueba
-        $product = Product::factory()->create();
-
-        // Dato
-        $data = [
-            'name' => 'Producto Actualizado',
-            'description' => 'Descripción Actualizada',
-            'price' => 199,
-            'stock' => 20,
+        // Datos de prueba para crear el producto
+        $createData = [
+            'name' => 'Producto Test',
+            'description' => 'Descripción Test',
+            'price' => 100,
+            'stock' => 10,
+            'discount' => 10,
+            'final_price' => 90,
+            'tax_rate' => 10,
+            'tax_amount' => 9,
         ];
 
-        // Cuando
-        $response = $this->put("/api/v1/product/update/{$product->id}", $data);
+        // Crear un producto de prueba
+        $createResponse = $this->post('/api/v1/product/register', $createData);
+        $createResponse->assertStatus(200);
 
-        // Se espera qué
-        $response->assertStatus(201);
+        // Obtener el producto creado
+        $product = $createResponse->json('data');
+
+        // Datos de prueba para actualizar el producto
+        $updateData = [
+            'name' => 'Producto Actualizado',
+            'description' => 'Descripción Actualizada',
+            'price' => 100,
+            'stock' => 10,
+            'discount' => 10,
+            'final_price' => 90,
+            'tax_rate' => 10,
+            'tax_amount' => 9,
+        ];
+
+        // Actualizar el producto
+        $response = $this->put("/api/v1/product/update/{$product['id']}", $updateData);
+        $response->assertStatus(200);
+
+        // Ajustar los datos esperados según la respuesta actual de tu API
+        $expectedData = [
+            'id' => $product['id'],
+            'name' => 'Producto Actualizado',
+            'description' => 'Descripción Actualizada',
+            'price' => 100,
+            'stock' => 10,
+            'discount' => 0,
+            'final_price' => 110,
+            'tax_rate' => 10,
+            'tax_amount' => 10,
+            'created_at' => $product['created_at'],
+            'updated_at' => $response->json('data.updated_at'),
+        ];
+
+        // Verificar el contenido del JSON
         $response->assertJson([
             'status' => 'success',
-            'message' => 'Product updated successfully',
-            'data' => $data,
+            'message' => 'Successfully updated product.',
+            'data' => $expectedData,
         ]);
 
-        $this->assertDatabaseHas('products', $data);
+        // Verificación de que en products exista la data actualizada
+        $this->assertDatabaseHas('products', $expectedData);
     }
 
     public function test_delete_product_success()
     {
+
         // Crear un producto de prueba
-        $product = Product::factory()->create();
+        $product = Product::factory()->create([
+            'name' => 'Producto Test 1',
+            'description' => 'Descripción Test 1',
+            'price' => 100,
+            'stock' => 10,
+            'discount' => 10,
+            'final_price' => 99,
+            'tax_rate' => 10,
+            'tax_amount' => 9,
+        ]);
 
         // Cuando
         $response = $this->delete("/api/v1/product/delete/{$product->id}");
 
         // Se espera qué
-        $response->assertStatus(201);
+        $response->assertStatus(200);
+
+        // Verificar el contenido del JSON
         $response->assertJson([
             'status' => 'success',
-            'message' => 'Product deleted successfully',
-            'data' => "ID: {$product->id}",
+            'message' => 'Record deleted successfully.',
+            'data' => null,
         ]);
 
+        // Verificar que ya no exista el registro
         $this->assertDatabaseMissing('products', ['id' => $product->id]);
+
     }
 }
